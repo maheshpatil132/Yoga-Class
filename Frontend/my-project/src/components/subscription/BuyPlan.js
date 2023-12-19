@@ -47,8 +47,11 @@ const BuyPlan = () => {
         'Content-Type': 'application/json'
       }
     })
-   
-    enqueueSnackbar(res.data.message)
+    
+    if(res){
+
+      enqueueSnackbar(res.data.message)
+    }
     setModel(false)
 
   }
@@ -66,10 +69,10 @@ const BuyPlan = () => {
     try {
 
       const { data } = await Axios.get('/api/batches/all')
-      setBatches(data.batches)
+       
+      if(data) setBatches(data.batches)
 
     } catch (error) {
-      console.log(error);
     }
 
   }

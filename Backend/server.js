@@ -11,7 +11,7 @@ const app = express();
 const port = 3001;
 
 app.use(cors({
-  origin: ['http://localhost:3000' , 'https://yoga-class-frontend-drab.vercel.app/'], // Update with the actual origin of your client
+  origin: ['http://localhost:3000' , 'https://yoga-class-frontend-drab.vercel.app'], // Update with the actual origin of your client
   credentials: true
 }));
 

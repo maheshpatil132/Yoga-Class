@@ -9,7 +9,7 @@ import { compareDates } from '../../services/CompareDates'
 const Profile = () => {
 
     const [subscription, setSubscription] = useState(null)
-    const [compareResult, setCompareResult] = useState(true)
+    const [compareResult, setCompareResult] = useState(false)
 
     const { setModel } = useContext(ModalContext)
     const { user } = useContext(UserContext)
@@ -52,7 +52,8 @@ const Profile = () => {
             }
 
         } catch (error) {
-            enqueueSnackbar(error.response.data.error, { variant: 'info' })
+             
+            // enqueueSnackbar(String(error.response.data.error), { variant: 'info' })
         }
     }
    
