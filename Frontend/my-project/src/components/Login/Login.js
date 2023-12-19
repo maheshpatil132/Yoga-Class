@@ -26,7 +26,7 @@ const Login = () => {
     const submithandle = async (e) => {
         e.preventDefault();
         try {
-          const response = await Axios.post('http://localhost:3001/api/users/login', {
+          const response = await Axios.post('/api/users/login', {
             email: email,
             password: password
           }, {
