@@ -10,7 +10,7 @@
     "sqlite3": "^5.1.6"
   },
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "name": "backend",
   "version": "1.0.0",
