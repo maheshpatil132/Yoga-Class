@@ -11,7 +11,7 @@ const app = express();
 const port = 3001;
 
 app.use(cors({
-  origin: 'http://localhost:3000', // Update with the actual origin of your client
+  origin: ['http://localhost:3000' , 'https://yoga-class-frontend-drab.vercel.app/'], // Update with the actual origin of your client
   credentials: true
 }));
 
@@ -21,6 +21,13 @@ app.use('/api/users', userRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
 app.use('/api/batches', batchRoutes);
 app.use('/api/payments', paymentRoutes);
+
+
+app.use('/', (req, res, next)=>{
+  res.status(200).json({
+    message : "Server is runing..."
+  })
+})
 
 // Database connection
 db.connect(() => {

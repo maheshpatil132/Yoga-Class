@@ -3,7 +3,7 @@ import BuyPlan from '../subscription/BuyPlan'
 import ModalContext from '../../context/ModelContext'
 import UserContext from '../../context/UserContext'
 import { Axios } from '../../Axios/Axios'
-import { enqueueSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 import { compareDates } from '../../services/CompareDates'
 
 const Profile = () => {
@@ -13,6 +13,9 @@ const Profile = () => {
 
     const { setModel } = useContext(ModalContext)
     const { user } = useContext(UserContext)
+
+
+    const {enqueueSnackbar} = useSnackbar()
 
 
 

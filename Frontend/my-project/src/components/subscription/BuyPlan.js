@@ -3,7 +3,8 @@ import Dialog from '@mui/material/Dialog';
 import ModalContext from '../../context/ModelContext';
 import { Axios } from '../../Axios/Axios';
 import UserContext from '../../context/UserContext';
-import { enqueueSnackbar } from 'notistack';
+import { useSnackbar } from 'notistack';
+
 
 const BuyPlan = () => {
 
@@ -11,7 +12,7 @@ const BuyPlan = () => {
   const { user } = useContext(UserContext)
   const [batches, setBatches] = useState([])
 
-
+  const {enqueueSnackbar} = useSnackbar()
   // user_id, batch_id, startdate, enddate
 
   var today = new Date();
