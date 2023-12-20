@@ -12,6 +12,8 @@ const recordPayment = async (req, res) => {
     // Record the payment
     const paymentId = await paymentModel.recordPayment({ amount, user_id, batch_id, paid_at: new Date().toISOString() });
 
+    
+
 
     res.json({ success: true, message: 'Payment recorded successfully', paymentId });
   } catch (error) {
