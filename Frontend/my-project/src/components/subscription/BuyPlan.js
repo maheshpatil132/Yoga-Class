@@ -12,45 +12,66 @@ const BuyPlan = () => {
   const { user } = useContext(UserContext)
   const [batches, setBatches] = useState([])
 
-  const {enqueueSnackbar} = useSnackbar()
+  const { enqueueSnackbar } = useSnackbar()
   // user_id, batch_id, startdate, enddate
 
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
   var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
   var yy = String(today.getFullYear()).slice(); // Get last two digits of the year
-  
+
   let formattedStartDate = dd + '-' + mm + '-' + yy;
-  
+
   // Calculate last date of the current month
   var lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
   var lastDayDD = String(lastDay.getDate()).padStart(2, '0');
   let formattedEndDate = lastDayDD + '-' + mm + '-' + yy;
 
- 
+
   const [selectedTime, setSelectedTime] = useState(1);
 
   const handleRadioChange = (event) => {
-    setSelectedTime( Number(event.target.value));
+    setSelectedTime(Number(event.target.value));
   };
 
   const payment = async () => {
+    //  amount, user_id, batch_id, paid_at 
+    // amount, user_id, batch_id
 
-    const res = await Axios.post('/api/subscriptions/create', {
-      user_id: user.user_id,
-      batch_id : selectedTime,
-      startdate : formattedStartDate,
-      enddate : formattedEndDate
+      if(!selectedTime) return enqueueSnackbar("please select time slot" , { variant:'error'})
+      const payment = await Axios.post('/api/payments/record' , {
+        amount : 500,
+        user_id: user.user_id,
+        batch_id: selectedTime,
     }, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }
     })
-    
-    if(res){
 
-      enqueueSnackbar(res.data.message)
+
+
+    if(!payment){
+      return enqueueSnackbar('payment failed', { variant:'error'})
+    }
+
+    const res = await Axios.post('/api/subscriptions/create', {
+      user_id: user.user_id,
+      batch_id: selectedTime,
+      startdate: formattedStartDate,
+      enddate: formattedEndDate,
+      payment_id : payment.data.paymentId
+    }, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+
+    if (res) {
+
+      enqueueSnackbar(res.data.message , { variant:'success'})
     }
     setModel(false)
 
@@ -69,8 +90,8 @@ const BuyPlan = () => {
     try {
 
       const { data } = await Axios.get('/api/batches/all')
-       
-      if(data) setBatches(data.batches)
+
+      if (data) setBatches(data.batches)
 
     } catch (error) {
     }

@@ -1,9 +1,9 @@
 const { db } = require('../db');
 
 const createSubscription = (subscriptionData) => {
-  const { user_id, batch_id, startdate, enddate } = subscriptionData;
-  const stmt = db.prepare('INSERT INTO subscriptions (user_id, batch_id, startdate, enddate) VALUES (?, ?, ?, ?)');
-  stmt.run(user_id, batch_id, startdate, enddate);
+  const { user_id, batch_id, startdate, enddate , payment_id } = subscriptionData;
+  const stmt = db.prepare('INSERT INTO subscriptions (user_id, batch_id, startdate, enddate ,payment_id) VALUES (?, ?, ?, ? , ?)');
+  stmt.run(user_id, batch_id, startdate, enddate , payment_id);
   stmt.finalize();
 };
 

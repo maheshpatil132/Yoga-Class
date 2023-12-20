@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import BuyPlan from '../subscription/BuyPlan'
 import ModalContext from '../../context/ModelContext'
 import UserContext from '../../context/UserContext'
@@ -15,7 +15,7 @@ const Profile = () => {
     const { user } = useContext(UserContext)
 
 
-    const {enqueueSnackbar} = useSnackbar()
+    const { enqueueSnackbar } = useSnackbar()
 
 
 
@@ -29,18 +29,30 @@ const Profile = () => {
 
     useEffect(() => {
 
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-        var yy = String(today.getFullYear()).slice(); // Get last two digits of the year
-
-        let curentDate = dd + '-' + mm + '-' + yy;
 
 
         getSubscriptionDetails()
 
-        if(subscription) setCompareResult(compareDates(subscription.enddate, curentDate))
+
     }, [])
+
+
+    const resule = useCallback(() => {
+
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+            var yy = String(today.getFullYear()).slice(); // Get last two digits of the year
+
+            let curentDate = dd + '-' + mm + '-' + yy;
+
+
+            if (subscription) setCompareResult(compareDates(curentDate, subscription.enddate))
+            
+
+        },
+        [subscription],
+    )
 
 
     const getSubscriptionDetails = async () => {
@@ -51,12 +63,13 @@ const Profile = () => {
                 setSubscription(data[0])
             }
 
+
         } catch (error) {
-             
+
             // enqueueSnackbar(String(error.response.data.error), { variant: 'info' })
         }
     }
-   
+
 
     return (
         <div className=' py-10 px-2 lg:px-12 bg-blue-200 min-h-screen'>
@@ -109,10 +122,10 @@ const Profile = () => {
                     </div>
                 }
 
-                <button 
+                <button
                     disabled={compareResult}
                     onClick={buyplan}
-                    className={` ${ compareResult ? 'bg-gray-500' : 'bg-purple-500' }  mt-5 text-white font-medium px-4 py-2 rounded`}>
+                    className={` ${compareResult ? 'bg-gray-500' : 'bg-purple-500'}  mt-5 text-white font-medium px-4 py-2 rounded`}>
                     {subscription ? 'Renew Subscription' : 'Buy Subcription'}
                 </button>
 

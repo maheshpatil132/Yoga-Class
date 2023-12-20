@@ -20,10 +20,12 @@ const registerUser = async (req, res) => {
 
     const user = { name, email, age, password: hashedPassword };
     const userId = await userModel.registerUser(user);
-
+    
     // Do not automatically create subscription here
+    user.user_id = userId
+    
 
-    res.json({ success: true, message: 'Registration successful', user });
+    res.json({ success: true, message: 'Registration successful', user});
   } catch (error) {
  
     res.status(500).json({ error: 'Internal Server Error' });

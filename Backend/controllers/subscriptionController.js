@@ -2,15 +2,15 @@ const subscriptionModel = require('../models/subscriptionModel');
 
 const createSubscription = async (req, res) => {
   try {
-    const { user_id, batch_id, startdate, enddate } = req.body;
+    const { user_id, batch_id, startdate, enddate , payment_id } = req.body;
 
     // Check if required parameters are present
-    if (!user_id || !batch_id || !startdate) {
-      return res.status(400).json({ error: 'user_id, batch_id, and startdate are required' });
+    if (!user_id || !batch_id || !startdate || !payment_id) {
+      return res.status(400).json({ error: 'user_id, batch_id, payment_id and startdate are required' });
     }
 
     // Create a subscription for the user
-    await subscriptionModel.createSubscription({ user_id, batch_id, startdate, enddate });
+    await subscriptionModel.createSubscription({ user_id, batch_id, startdate, enddate , payment_id });
 
     res.json({ success: true, message: 'Subscription created successfully' });
   } catch (error) {
