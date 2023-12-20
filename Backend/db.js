@@ -1,8 +1,8 @@
 const sqlite3 = require('sqlite3').verbose();
 const express = require('express');
-
+const path = require('path');
 const app = express();
-const db = new sqlite3.Database('yoga_classes.db');
+const db = new sqlite3.Database(path.resolve(__dirname, 'yoga_classes.db'));
 
 const connect = (callback) => {
   db.serialize(() => {

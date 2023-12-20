@@ -11,11 +11,12 @@ const app = express();
 const port = 3001;
 
 app.use(cors({
-  origin: ['http://localhost:3000' , 'https://yoga-class-frontend-drab.vercel.app'], // Update with the actual origin of your client
+  origin: ['http://localhost:3000' , 'https://yoga-class-frontend-drab.vercel.app'], 
   credentials: true
 }));
 
 app.use(bodyParser.json());
+
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
@@ -27,6 +28,14 @@ app.get('/' ,(req,res,next)=>{
   console.log("server in running");
   res.send("Hi, From bacakend")
 })
+
+
+app.use((err, req, res, next) => {
+  console.error('Error:', err.stack);
+  res.status(500).send('Internal Server Error');
+});
+
+
 
 // Database connection
 db.connect(() => {
