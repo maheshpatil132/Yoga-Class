@@ -23,10 +23,9 @@ app.use('/api/batches', batchRoutes);
 app.use('/api/payments', paymentRoutes);
 
 
-app.use('/', (req, res, next)=>{
-  res.status(200).json({
-    message : "Server is runing..."
-  })
+app.get('/' ,(req,res,next)=>{
+  console.log("server in running");
+  res.send("Hi, From bacakend")
 })
 
 // Database connection
